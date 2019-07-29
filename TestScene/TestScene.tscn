@@ -6,6 +6,7 @@
 [node name="TestScene" type="Spatial"]
 
 [node name="Level" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="MeshInstance" parent="Level" instance=ExtResource( 1 )]
 

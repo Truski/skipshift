@@ -44,14 +44,18 @@ func _unhandled_input(event):
 	if event is InputEventKey and event.pressed:
 		match event.scancode:
 			KEY_ESCAPE:
-				get_tree().quit()
-			KEY_W: #FORWARD
+				var mouseMode = Input.get_mouse_mode()
+				if (mouseMode == Input.MOUSE_MODE_VISIBLE):
+					Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+				if (mouseMode == Input.MOUSE_MODE_CAPTURED):
+					Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			KEY_W:
 				Direction.z -= 1
-			KEY_S: #BACKBAWRD
+			KEY_S:
 				Direction.z += 1
-			KEY_A: #LEFT
+			KEY_A:
 				Direction.x -= 1
-			KEY_D: #RIGHT
+			KEY_D:
 				Direction.x += 1
 	if event is InputEventKey and not event.pressed:
 		match event.scancode:
