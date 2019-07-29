@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Player/Controller.gd" type="Script" id=1]
+
+[node name="Controller" type="Spatial"]
+editor/display_folded = true
+script = ExtResource( 1 )
+
+[node name="InnerGimbal" type="Spatial" parent="."]
+
+[node name="Camera" type="Camera" parent="InnerGimbal"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 4 )
