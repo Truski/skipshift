@@ -14,7 +14,7 @@ var Player
 var InnerGimbal
 var Direction = Vector3()
 var Rotation = Vector2()
-#var gravity = -10
+var gravity = -10
 var Movement = Vector3()
 var ZoomFactor = 1
 var ActualZoom = 1
@@ -57,6 +57,10 @@ func _unhandled_input(event):
 				Direction.x -= 1
 			KEY_D:
 				Direction.x += 1
+			KEY_SPACE:
+				if not IsAirborne:
+					CurrentVerticalSpeed = Vector3(0,MaxJump,0)
+					IsAirborne = true
 	if event is InputEventKey and not event.pressed:
 		match event.scancode:
 			KEY_W:
@@ -67,10 +71,6 @@ func _unhandled_input(event):
 				Direction.x += 1
 			KEY_D:
 				Direction.x -= 1
-			#KEY_SPACE:
-			#	if not IsAirborne:
-			#		CurrentVerticalSpeed = Vector3(0,MaxJump,0)
-			#		IsAirborne = true
 	Direction.z = clamp(Direction.z, -1,1)
 	Direction.x = clamp(Direction.x, -1,1)
 	
@@ -86,12 +86,12 @@ func _physics_process(delta):
 	var MaxSpeed = MovementSpeed *Direction.normalized()
 	Speed = Speed.linear_interpolate(MaxSpeed, delta * Acceleration)
 	Movement = Player.transform.basis * (Speed)
-	#CurrentVerticalSpeed.y += gravity * delta * JumpAcceleration
+	CurrentVerticalSpeed.y += gravity * delta * JumpAcceleration
 	Movement += CurrentVerticalSpeed
 	Player.move_and_slide(Movement,Vector3(0,1,0))
-	#if Player.is_on_floor() :
-		#CurrentVerticalSpeed.y = 0
-		#IsAirborne = false
+	if Player.is_on_floor() :
+		CurrentVerticalSpeed.y = 0
+		IsAirborne = false
 	
 	#Zoom
 	ActualZoom = lerp(ActualZoom, ZoomFactor, delta * ZoomSpeed)
