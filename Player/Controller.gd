@@ -1,5 +1,8 @@
 extends Spatial
 
+const GROUND_ACCELERATION = 10
+const AIR_ACCELERATION = 1
+
 export(NodePath) var PlayerPath  = "" #You must specify this in the inspector!
 export(float) var MovementSpeed = 10
 export(float) var Acceleration = 10
@@ -61,6 +64,7 @@ func _unhandled_input(event):
 				if not IsAirborne:
 					CurrentVerticalSpeed = Vector3(0,MaxJump,0)
 					IsAirborne = true
+					Acceleration = AIR_ACCELERATION
 	if event is InputEventKey and not event.pressed:
 		match event.scancode:
 			KEY_W:
@@ -92,6 +96,7 @@ func _physics_process(delta):
 	if Player.is_on_floor() :
 		CurrentVerticalSpeed.y = 0
 		IsAirborne = false
+		Acceleration = GROUND_ACCELERATION
 	
 	#Zoom
 	ActualZoom = lerp(ActualZoom, ZoomFactor, delta * ZoomSpeed)
