@@ -97,6 +97,9 @@ func _physics_process(delta):
 		CurrentVerticalSpeed.y = 0
 		IsAirborne = false
 		Acceleration = GROUND_ACCELERATION
+	if Player.is_on_ceiling():
+		if CurrentVerticalSpeed.y > 0:
+			CurrentVerticalSpeed.y = -CurrentVerticalSpeed.y * .5
 	
 	#Zoom
 	ActualZoom = lerp(ActualZoom, ZoomFactor, delta * ZoomSpeed)
